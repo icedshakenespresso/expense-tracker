@@ -2,16 +2,19 @@
   import Header from './components/Header.vue';
   import Balance from './components/Balance.vue';
   import IncomeExpenses from './components/IncomeExpenses.vue';
+  import AddTransaction from './components/AddTransaction.vue'; 
   import {ref, computed} from 'vue'
 
-  const transactions = ref([
-    {id: 1, text: 'Paycheck', amount: 699.99},
-    {id: 2, text: 'Food', amount: -20},
-    {id: 3, text: 'Bills', amount: -200},
-    {id: 4, text: 'Video Game', amount: -54.11},
-    {id: 5, text: 'Tax Return', amount: 3000},
+  const transactions = ref([])
 
-  ])
+  // const transactions = ref([
+  //   {id: 1, text: 'Paycheck', amount: 699.99},
+  //   {id: 2, text: 'Food', amount: -20},
+  //   {id: 3, text: 'Bills', amount: -200},
+  //   {id: 4, text: 'Video Game', amount: -54.11},
+  //   {id: 5, text: 'Tax Return', amount: 3000},
+
+  // ])
 
 
   // get the total
@@ -39,6 +42,14 @@
     }, 0)
   })
 
+  // handle transactio submitted
+  const handleTransactionSubmitted = (transactionData) => {
+    transactions.value.push({
+      text: transactionData.text,
+      amount: transactionData.amount,
+    })
+  }
+
 </script>
 
 <template>
@@ -46,5 +57,7 @@
   <div class="container">
     <Balance :total="total"></Balance>
     <IncomeExpenses :income="income" :expense="expense"></IncomeExpenses>
+    <AddTransaction @transactionSubmitted="handleTransactionSubmitted"></AddTransaction>
+    <!-- {{ transactions }} -->
   </div>
 </template>
